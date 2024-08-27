@@ -35,22 +35,23 @@ public static class Snake
             Point target=new Point(0,0);
             if (next.Count > 0)
             {
-                Debug.Log("1");
+                bool get = false;
                 TweenManager.Instance.StartProcedure(SKCurve.BounceDoubleIn, 0.5f, (t) =>
                 {
-                        if (next.Count > 0)
-                        {
-                            Point nextPoint=next.Dequeue();
-                            target = nextPoint;
-                        }
-                        //弹出来的可能不是地图上的点，可能有bug
-                        // 设置目标位置
-                        Transform transform = @base.gameObject.transform;
-                        Vector2 nextPosition = new Vector2(target.XPosition, target.YPosition);
-                        transform.position = Vector2.Lerp(transform.position, nextPosition, t);
+                    if (next.Count > 0&&!get)
+                    {
+                        get = true;
+                        Point nextPoint=next.Dequeue();
+                        target = nextPoint;
+                        @base.SnakeMove(target);
+                    }
+                    //弹出来的可能不是地图上的点，可能有bug
+                    // 设置目标位置
+                    Transform transform = @base.gameObject.transform;
+                    Vector2 nextPosition = new Vector2(target.XPosition, target.YPosition);
+                    transform.position = Vector2.Lerp(transform.position, nextPosition, t);
                 }, () =>
                 {
-                    @base.SnakeMove(target);
                     Debug.Log("Finished");
                 });
             }
@@ -62,7 +63,8 @@ public static class Snake
         if (direction == default)direction=Vector2.right;
         Vector2 head = GameObject.FindWithTag("SnakeHead").transform.position;
         Point changePoint = GlobalGame.Instance.PointMap.GetPointInMap(new Point((int)head.x,(int)head.y),true);
-        //changePoint.SetDirection()
+        changePoint.SetDirection(direction);
+        
         Queue<Point> nextQueue = new Queue<Point>();
         foreach (var t in SnakeTransform)
         {
@@ -77,7 +79,7 @@ public static class Snake
             }
             else
             {
-                Vector2 dir = direction == Vector2.zero ? Vector2.right : direction;
+                Vector2 dir =  Vector2.right;
                 Point nextPoint = new Point((int)(position.x+dir.x), (int)(position.y+dir.y));
                 nextQueue.Enqueue(nextPoint);
             }

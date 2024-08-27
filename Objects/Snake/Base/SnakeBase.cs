@@ -70,24 +70,7 @@ namespace Objects
             return _points[1];
         }
 
-        /// <summary>
-        /// 依据目标点移动蛇同时更新坐标
-        /// </summary>
-        /// <param name="targetPosition"></param>
-        public void SnakeMove_Head(Point targetPosition)
-        {
-            //确实下一目标点
-            //结合当前点和目标点给出预测移动方向
-            //修改当前点的方向
-            //更新所有物体的位置
-            //更新所有物体的点位，方向
-            SnakeDirection nextDirection= DetermineDirection(Points[1], targetPosition);
-            ChangePointDirection(nextDirection);
-            
-            SetNewPoints(targetPosition);
-            RefreshDirection();
-            SwitchSnakeFollow();
-        }
+
 
         /// <summary>
         /// 蛇的逻辑位置改变（物理位置待改变）
@@ -101,11 +84,6 @@ namespace Objects
         }
 
 // --------------------------------------------------------------------------------------------------------------------------------
-        private void ChangePointDirection(SnakeDirection direction)
-        {
-            Point current = Points[1];
-            current.Direction = Point.SetDirection(direction);
-        }
         /// <summary>
         /// 改变蛇的朝向
         /// </summary>

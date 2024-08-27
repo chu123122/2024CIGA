@@ -67,16 +67,9 @@ namespace Utilities
             set => _canMove = value;
         }
 
-        public  Vector2 SetDirection(SnakeDirection direction)
+        public void SetDirection(Vector2 direction)
         {
-            return direction switch
-            {
-                SnakeDirection.Up => Vector2.up,
-                SnakeDirection.Down => Vector2.down,
-                SnakeDirection.Left => Vector2.left,
-                SnakeDirection.Right => Vector2.right,
-                _ => Vector2.right
-            };
+            _direction = direction;
         }
 
         public override string ToString()
