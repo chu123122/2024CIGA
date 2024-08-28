@@ -77,6 +77,12 @@ namespace Utilities
             return $"(X:{XPosition},Y:{YPosition})";
         }
 
+        public bool Equals(Point position)
+        {
+            if (this.XPosition == position.XPosition && this.YPosition == position.YPosition)
+                return true;
+            return false;
+        }
         public static string ToStrings(Point[] points)
         {
             StringBuilder sb = new StringBuilder();

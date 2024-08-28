@@ -48,8 +48,19 @@ namespace Objects
         /// <returns></returns>
         public Point MoveWithoutTarget(Point current, PointMap map)
         {
-            
-            return new Point(1, 1, false);
+            Point rightNext=new Point(current.XPosition+1, current.YPosition);
+            Point leftNext=new Point(current.XPosition-1, current.YPosition);
+            Point upNext=new Point(current.XPosition, current.YPosition+1);
+            Point downNext=new Point(current.XPosition, current.YPosition-1);
+            if (map.GetPointInMap(rightNext,true,true) != null)
+                return rightNext;
+            if(map.GetPointInMap(upNext,true,true) != null)
+                return upNext;
+            if(map.GetPointInMap(leftNext,true,true) != null)
+                return leftNext;
+            if(map.GetPointInMap(downNext,true,true)!= null)
+                return downNext;
+            throw new ArgumentException("没有找到下一个可以行动的点");
         }
 
 

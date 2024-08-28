@@ -21,18 +21,17 @@ namespace Utilities
         {
             return Map[checkPoint.XPosition, checkPoint.YPosition] != null;
         }
-
-        //TODO:Test
+        
         public Point[] GetNearlyPoint(Point currentPoint)
         {
             int x = currentPoint.XPosition;
             int y = currentPoint.YPosition;
             Point[] nearPoints =
             {
-                GetPointInMap(new Point(x - 1, y)),
-                GetPointInMap(new Point(x + 1, y)),
-                GetPointInMap(new Point(x, y - 1)),
-                GetPointInMap(new Point(x, y + 1))
+                GetPointInMap(new Point(x - 1, y),true),
+                GetPointInMap(new Point(x + 1, y),true),
+                GetPointInMap(new Point(x, y - 1),true),
+                GetPointInMap(new Point(x, y + 1),true)
             };
             Point[] validNearPoints = nearPoints.Where(p => p != null).ToArray();
             return validNearPoints;
@@ -43,16 +42,21 @@ namespace Utilities
         {
             return new Vector2(Map.GetLength(0), Map.GetLength(1));
         }
-
-        //TODO:TestReturnHaveLimit
+        
         //获取地图上的点，返回Point
-        public Point GetPointInMap(Point point,bool Inisitite=false)
+        public Point GetPointInMap(Point point,bool Inisitite=false,bool checkSelf=false)
         {
             int xLimit = Map.GetLength(0) - 1;
             int yLimit = Map.GetLength(1) - 1;
             bool xCan = point.XPosition >= 0 && point.XPosition <= xLimit;
             bool yCan = point.YPosition >= 0 && point.YPosition <= yLimit;
-            if (xCan && yCan) return Map[point.XPosition, point.YPosition];
+            bool inSelf=false;
+            foreach (var snakeBase in Snake.SnakeBases)
+            {
+                if (point.Equals(snakeBase.Points[1]))
+                    inSelf = true;
+            }
+            if (xCan && yCan&&(!inSelf||!checkSelf)) return Map[point.XPosition, point.YPosition];
             if(Inisitite==false)
                 throw new ArgumentException($"点({point.XPosition},{point.YPosition})的位置不在地图上！");
             return null;

@@ -13,9 +13,7 @@ namespace Objects
         private SnakeDirection[] _directions = new SnakeDirection[2];
         private SnakeState _snakeState;
         protected SnakeToward CurrentToward;
-
-
-        //TODO:每次获取Direction时都会刷新一次位置获取
+        
         public Point[] Points => _points;
 
         public SnakeDirection[] Direction

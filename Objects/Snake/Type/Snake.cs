@@ -26,8 +26,7 @@ public static class Snake
             SnakeBases.Add(snake.gameObject.GetComponent<SnakeBase>());
         }
     }
-
-    //TODO:开的协程只运行一次
+    
     public static void MoveAllSnakeBases(Queue<Point> next)
     {
         foreach (var @base in SnakeBases)
@@ -36,7 +35,7 @@ public static class Snake
             if (next.Count > 0)
             {
                 bool get = false;
-                TweenManager.Instance.StartProcedure(SKCurve.BounceDoubleIn, 0.5f, (t) =>
+                TweenManager.Instance.StartProcedure(SKCurve.LinearIn, 0.8f, (t) =>
                 {
                     if (next.Count > 0&&!get)
                     {
