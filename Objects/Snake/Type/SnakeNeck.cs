@@ -12,12 +12,5 @@ public class SnakeNeck : SnakeBase
         int y = (int)transform.position.y;
         InitializePoints(new Point(x-1,y),new Point(x,y));
     }
-
-    private void SnakeNeckMove()
-    {
-        Debug.Log(gameObject.name + ":SnakeNeckMove");
-        Point target = _head.Points[0];
-        //SnakeMove(target,_head);
-        this.GetComponent<SpriteRenderer>().sprite = DetermineSprite(SnakeState);
-    }
+    
 }

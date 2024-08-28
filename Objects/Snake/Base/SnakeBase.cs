@@ -80,6 +80,8 @@ namespace Objects
         {
             SetNewPoints(targetPosition);
             RefreshDirection();
+            if(!this.GetComponent<SnakeHead>())
+                this.GetComponent<SpriteRenderer>().sprite=DetermineSprite(SnakeState);
             SwitchSnakeFollow();
         }
 
@@ -153,7 +155,7 @@ namespace Objects
             };
         }
 
-        public Sprite DetermineSprite(SnakeState state)
+        private Sprite DetermineSprite(SnakeState state)
         {
             return state switch
             {
