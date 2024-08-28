@@ -7,7 +7,6 @@ namespace Objects
 {
     public class SnakeBase : MonoBehaviour 
     {
-        public event Action SnakeMoved;
         [SerializeField] private List<Sprite> sprites = new List<Sprite>();
         private readonly Point[] _points = new Point[2];
         private SnakeDirection[] _directions = new SnakeDirection[2];
