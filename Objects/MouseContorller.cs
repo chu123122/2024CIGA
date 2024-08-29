@@ -8,54 +8,50 @@ namespace QFramework.Objects
     {
         public GameObject objectToSpawn; // 需要在游戏场景中生成的物体
         public Transform parent; // UI物体的父物体
-        private RectTransform rectTransform;
-        private Canvas canvas;
-        private Vector3 orginalPosition;
+        private RectTransform _rectTransform;
+        private Canvas _canvas;
+        private Vector3 _originalPosition;
 
         private void Awake()
         {
-            rectTransform = GetComponent<RectTransform>();
-            canvas = GetComponentInParent<Canvas>();
+            _rectTransform = GetComponent<RectTransform>();
+            _canvas = GetComponentInParent<Canvas>();
         }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
             // 开始拖拽时
-            orginalPosition = transform.position;
+            _originalPosition = transform.position;
         }
 
         public void OnDrag(PointerEventData eventData)
         {
             // 更新UI物体位置
-            rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+            _rectTransform.anchoredPosition += eventData.delta / _canvas.scaleFactor;
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
             // 结束拖拽时，将UI物体转换为游戏物体
-            if (RectTransformUtility.ScreenPointToWorldPointInRectangle(rectTransform, eventData.position,
+            if (RectTransformUtility.ScreenPointToWorldPointInRectangle(_rectTransform, eventData.position,
                     eventData.pressEventCamera, out var worldPosition))
             {
                 Vector2 position = new Vector2(Mathf.RoundToInt(worldPosition.x), Mathf.RoundToInt(worldPosition.y));
                 if (GlobalGame.Instance.PointMap.GetPointInMap(new Point((int)position.x, (int)position.y),true)!=null)
                 {
-                    //目标添加
-                    // TargetManager.Instance.TargetList.Add(Instantiate(objectToSpawn, position, Quaternion.identity,
-                    //     parent));
-                    // Destroy(gameObject);
-                    // SnakeManager.Instance.InitializeMap();
-                    // SnakeManager.Instance.start = true;
+                    GameObject apple = Instantiate(objectToSpawn,position, Quaternion.identity,parent);
+                    Destroy(this.gameObject);
                 }
                 else
                 {
                     Debug.Log("Position out of bounds, resetting position");
-                    transform.position = orginalPosition;
+                    transform.position = _originalPosition;
                 }
             }
             else
             {
                 Debug.Log("Failed to convert screen point to world point, resetting position");
-                transform.position = orginalPosition;
+                transform.position = _originalPosition;
             }
 
         }

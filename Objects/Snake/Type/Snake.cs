@@ -51,7 +51,7 @@ public static class Snake
                     transform.position = Vector2.Lerp(transform.position, nextPosition, t);
                 }, () =>
                 {
-                    Debug.Log("Finished");
+                    //Debug.Log("Finished");
                 });
             }
         }
